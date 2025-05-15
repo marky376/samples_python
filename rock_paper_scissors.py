@@ -1,22 +1,20 @@
 import random
 
 options = ["rock", "paper", "scissors"]
+
 def get_user_choice():
     while True:
         user_choice = input("Please choose one of the following: rock, paper, or scissors: ").strip().lower()
         if not user_choice:
-            print("Error: Input cannot be empty. Please try again.")
-        elif user_choice in options:
+            print("Input cannot be empty. Please try again.")
+            continue
+        if user_choice in options:
             return user_choice
-        else:
-            print("Error: Invalid choice. Please choose rock, paper, or scissors.")
-
-# ... existing code ...
+        print("Invalid choice! Please enter 'rock', 'paper', or 'scissors'.")
 
 def get_computer_choice():
-    computer_choice = random.choice(options)
-    return computer_choice
-    
+    return random.choice(options)
+
 def get_winner(user_choice, computer_choice):
     if user_choice == computer_choice:
         return "It's a tie!"
@@ -37,34 +35,34 @@ def main():
     print("Welcome to Rock, Paper, Scissors!")
     user_score = 0
     computer_score = 0
-    
+
     while True:
         user_choice = get_user_choice()
         computer_choice = get_computer_choice()
         result = get_winner(user_choice, computer_choice)
         print(f"You chose {user_choice} and the computer chose {computer_choice}. {result}")
-        
-        # Update scores based on result
-        if "win" in result.lower():
+
+        if "You win" in result:
             user_score += 1
-        elif "lose" in result.lower():
+        elif "You lose" in result:
             computer_score += 1
-            
-        # Display current score
-        print(f"Score - User: {user_score}, Computer: {computer_score}")
-        
-        # Ask to play again
-        play_again = input("Play again? (yes/quit): ").strip().lower()
-        if play_again != 'yes':
-            # Display final summary
-            print("\nGame Over!")
-            print(f"Final Score - User: {user_score}, Computer: {computer_score}")
+
+        print(f"Score - You: {user_score}, Computer: {computer_score}")
+
+        while True:
+            play_again = input("Play again? (yes/quit): ").lower().strip()
+            if play_again in ["yes", "quit"]:
+                break
+            print("Please enter 'yes' or 'quit'.")
+
+        if play_again == "quit":
+            print(f"\nFinal score - You: {user_score}, Computer: {computer_score}")
             if user_score > computer_score:
                 print("Congratulations! You are the overall winner!")
             elif computer_score > user_score:
-                print("Sorry, the computer is the overall winner.")
+                print("The computer is the overall winner...")
             else:
-                print("It's a tie overall!")
+                print("The game ended in a tie!")
             break
 
 if __name__ == "__main__":
